@@ -146,11 +146,6 @@ $(window).on('load', function () {
     var overlay;  // URL of the overlay for in-focus chapter
     var geoJsonOverlay;
 
-    var paintinggroup = [];
-    var sculpturegroup = [];
-    var religiousgroup = [];
-
-
     for (i in chapters) {
       var c = chapters[i];
 
@@ -159,40 +154,28 @@ $(window).on('load', function () {
         var lon = parseFloat(c['Longitude']);
 
         chapterCount += 1;
-
-        className = "extra-marker-painting";
-        if (c['Marker'] === "Sculpture") className = "extra-marker-sculpture";
-        else if (c['Marker'] === "Religious") className = "extra-marker-religious";
-        else if (c['Marker'] === "Gallery") className = "extra-marker-gallery";
-
-        newmarker = L.marker([lat, lon], {
-          icon: L.ArtMarkers.icon({
-            icon: 'fa-number',
-            number: c['Marker'] === 'Plain' ? '' : chapterCount,
-            markerColor: c['Marker Color'] || 'blue',
-            className: className || "extra-marker-painting"
-          }),
-          opacity: c['Marker'] === 'Hidden' ? 0 : 0.9,
-          interactive: c['Marker'] === 'Hidden' ? false : true,
+ 
+        markers.push(
+          L.marker([lat, lon], {
+            icon: L.ExtraMarkers.icon({
+              icon: 'fa-number',
+              number: c['Marker'] === 'Plain' ? '' : chapterCount,
+              markerColor: c['Marker Color'] || 'blue'
+            }),
+            opacity: c['Marker'] === 'Hidden' ? 0 : 0.9,
+            interactive: c['Marker'] === 'Hidden' ? false : true,
           }
-        );
-
-        if (c['Marker'] === "Sculpture") sculpturegroup.push(newmarker);
-        else if (c['Marker'] === "Religious") religiousgroup.push(newmarker);
-        else if (c['Marker'] === "Gallery") paintinggroup.push(newmarker);
-        else paintinggroup.push(newmarker);
-
-        markers.push(newmarker);
+        ));
+ 
       } else {
         markers.push(null);
       }
-
+ 
       // Add chapter container
       var container = $('<div></div>', {
         id: 'container' + i,
         class: 'chapter-container'
       });
-
 
       // Add media and credits: YouTube, audio, or image
       var media = null;
