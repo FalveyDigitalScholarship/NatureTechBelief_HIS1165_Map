@@ -266,19 +266,6 @@ $(window).on('load', function () {
 
     changeAttribution();
 
-    //New layers for Facet Control
-     var paintinglayer = L.layerGroup(paintinggroup);
-     var sculpturelayer = L.layerGroup(sculpturegroup);
-     var religiouslayer = L.layerGroup(religiousgroup);
-
-     var overlayMaps = {
-      "Painting": paintinglayer, "Sculpture": sculpturelayer, "Religious": religiouslayer
-     };
-
-     var layerControl = L.control.layers(null,overlayMaps).addTo(map);
-
-    $("input:checkbox").trigger('click').prop('checked', true);
-
     /* Change image container heights */
     imgContainerHeight = parseInt(getSetting('_imgContainerHeight'));
     if (imgContainerHeight > 0) {
